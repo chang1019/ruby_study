@@ -82,18 +82,18 @@ end
 # read CSV file and parse as Array of Record Object.
 def readCSV(filePath)
   recordList = [];
-  lineNumber = 0;
   File.open(filePath) {|f|
-    f.each_line {|line|
-      if 0 < lineNumber then
-        fields = line.split(/\s*,\s*/);
-        record = Record.new(fields[0],
-                            Integer(fields[1]),
-                            Integer(fields[2]),
-                            Integer(fields[3]));
-        recordList.push(record);
+    f.lines.each_with_index {|line, i|
+      if 0 == i then
+        next;
       end
-      lineNumber += 1;
+
+      fields = line.split(/\s*,\s*/);
+      record = Record.new(fields[0],
+                          Integer(fields[1]),
+                          Integer(fields[2]),
+                          Integer(fields[3]));
+      recordList.push(record);
     }
   }
   return recordList;
